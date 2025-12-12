@@ -20,7 +20,7 @@ newtype ControllerAction capturedParams = Act { runAct :: RouteParams capturedPa
 ```
 
 When a URL is routed, each *capture* is parsed from peices of the URL, and stored in a `RouteParams` along with the matched route.
-A route params is defined as:
+A matched route is defined as:
 
 ```haskell
 data RouteMatch contained where
@@ -30,9 +30,27 @@ data RouteMatch contained where
     RouteMatch contained
 ```
 
+So, given the action above, we could do this:
+
+```haskell
+
+httpApplication :: Router ControllerAction
+httpApplication = mempty -- we'll show you how to fill this in later
+
+runMatch :: [Text] -> Maybe (IO HttpResponse)
+runMatch urlPieces =
+  case firstRouterMatch urlPieces httpApplication of
+    Nothing -> Nothing -- we can handle this with a 404 later
+    Just (RouteMatched params action) ->
+      -- Here, we know that `params` has type `RouteParams urlParamTypes`,
+      -- and `action` has type `ControllerAction urlParamTypes`.
+      -- We don't know what `urlParamTypes` *is*, but that doesn't matter: we know it's the same in both,
+      -- so we can do this:
+      Just $ action.runAct params
+```
+
 This enables dependently-typed routing: the *type* of your actions can depend on the *parameters* of your URLs, enhancing type-safety.
 And it's pretty damn fast, too.
-
 
 ## Installation
 
