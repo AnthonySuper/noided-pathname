@@ -33,7 +33,11 @@ data RouteMatch contained where
 This enables dependently-typed routing: the *type* of your actions can depend on the *parameters* of your URLs, enhancing type-safety.
 And it's pretty damn fast, too.
 
+
 ## Installation
+
+`noided-pathname` is not on hackage yet.
+Once it is, you can...
 
 Add `noided-pathname` to your cabal file's build-depends:
 
@@ -147,20 +151,10 @@ To run benchmarks:
 cabal bench noided-pathname
 ```
 
-## Type-Level Features
-
-The library uses several advanced type-level features:
-
-- **GADTs** for type-safe path templates
-- **Type families** for compile-time path composition
-- **DataKinds** to track captured parameters at the type level
-- **Dependent types** to ensure parameter access is safe
-
-These features ensure that many routing errors are caught at compile time rather than runtime.
-
 ## Contributing
 
-This library is part of the noided-web2 project. Issues and pull requests are welcome!
+Issues and pull requests are welcome.
+This library is experimental and extracted from a Haskell web framework I am trying to write.
 
 ## License
 
